@@ -1,0 +1,83 @@
+Hi <%=@user.first_name%>
+<%=link_to 'Go to all Products', shoes_path%>
+<a data-method="delete" href="/sessions/<%= session[:user_id] %>">Logout</a>
+
+
+<h3>Sell Product</h3>
+   <form action='/shoes' method='post'>
+     <input type='hidden' name='authenticity_token' value="<%=form_authenticity_token%>">
+     <div>
+       <label>Name</label>
+       <input type='text' name='shoe[product]'>
+     </div>
+     <div>
+       <label>Amount</label>
+       <input type='number' name='shoe[amount]'>
+     </div>
+     <input type='submit' value='Sell'>
+   </form>
+
+<h4>Your products that are not yet sold:</h4>
+  <table>
+    <tr>
+      <th>Product</th>
+      <th>Date Posted</th>
+      <th>Amount</th>
+      <th>Action</th>
+    </tr>
+
+    <%@user.shoes.reverse.each do |shoe|%>
+      <%if !@all_purchases_ids.include?(shoe.id)%>
+        <tr>
+          <td><%= shoe.product %></td>
+          <td><%= shoe.created_at.strftime("%b %d, %Y") %></td>
+          <td>$<%= shoe.amount %></td>
+
+          <td><a data-confirm="Really?" rel="nofollow" data-method="delete" href="/shoes/<%=shoe.id%>">Remove your listing</a><td>
+        </tr>
+      <%end%>
+    <%end%>
+  </table>
+
+
+<h4>Your Sales:</h4>
+<table>
+  <tr>
+    <th>Product</th>
+    <th>Date Bought</th>
+    <th>Buyer</th>
+    <th>Amount</th>
+  </tr>
+
+  <%@user.shoes.reverse.each do |shoe|%>
+  <%if @all_purchases_ids.include?(shoe.id)%>
+    <tr>
+      <td><%= shoe.product %></td>
+      <td><%= shoe.created_at.strftime("%b %d, %Y") %></td>
+      <td><%= shoe.buyer.first.first_name %> <%= shoe.buyer.first.last_name %></td>
+      <td>$<%= shoe.amount %></td>
+    </tr>
+  <%end%>
+<%end%>
+</table>
+
+
+
+<h4>Your Purchases:</h4>
+<table>
+  <tr>
+    <th>Product</th>
+    <th>Date Bought</th>
+    <th>Seller</th>
+    <th>Amount</th>
+  </tr>
+  <%@purchases.reverse.each do |product|%>
+  <tr>
+    <td><%= product.shoe.product %></td>
+    <td><%=product.created_at.strftime("%b %d, %Y")%></td>
+    <td><%= product.shoe.user.first_name %> <%= product.shoe.user.last_name %></td>
+    <td>$<%=product.shoe.amount%></td>
+    </td>
+  </tr>
+  <%end%>
+</table>

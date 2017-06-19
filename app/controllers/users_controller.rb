@@ -29,8 +29,8 @@ class UsersController < ApplicationController
     @user=User.find(session[:user_id])
     @purchases=@user.purchases
     @all_purchases_ids=Purchase.pluck(:shoe_id)
-    @total_spent=0
-    @purchases.each do |purchase|
+
+
 
   end
 

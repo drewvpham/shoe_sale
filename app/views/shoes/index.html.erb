@@ -15,7 +15,7 @@ Hi <%=@user.first_name%>
       <th>Amount</th>
       <th>Action</th>
     </tr>
-  <%@shoes.each do |shoe|%>
+  <%@shoes.reverse.each do |shoe|%>
     <%if !@all_purchases_ids.include?(shoe.id)%>
     <tr>
       <td><%= shoe.product %></td>
@@ -32,4 +32,3 @@ Hi <%=@user.first_name%>
       <%end%>
     <%end%>
   </table>
-  

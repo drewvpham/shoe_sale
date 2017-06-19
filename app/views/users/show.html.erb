@@ -33,7 +33,7 @@ Hi <%=@user.first_name%>
           <td><%= shoe.created_at.strftime("%b %d, %Y") %></td>
           <td>$<%= shoe.amount %></td>
 
-          <td><a data-confirm="Really?" rel="nofollow" data-method="delete" href="/shoes/<%=shoe.id%>">Remove your listing</a><td>
+          <td><a data-confirm="Really?" rel="nofollow" data-method="delete" href="/shoes/<%=shoe.id%>">Remove</a><td>
         </tr>
       <%end%>
     <%end%>
@@ -53,8 +53,8 @@ Hi <%=@user.first_name%>
   <%if @all_purchases_ids.include?(shoe.id)%>
     <tr>
       <td><%= shoe.product %></td>
-      <td><%= shoe.created_at.strftime("%b %d, %Y") %></td>
-      <td><%= shoe.buyer.first.first_name %> <%= shoe.buyer.first.last_name %></td>
+      <td><%= shoe.purchase.created_at.strftime("%b %d, %Y") %></td>
+      <td><%= shoe.buyer.first_name %> <%= shoe.buyer.last_name %></td>
       <td>$<%= shoe.amount %></td>
     </tr>
   <%end%>
@@ -81,3 +81,4 @@ Hi <%=@user.first_name%>
   </tr>
   <%end%>
 </table>
+<h5>Total: <%=@amount%></h5>
